@@ -1,0 +1,91 @@
+﻿
+<button onclick="loadCubes(11,5,11)">Load</button>
+<div>
+    <div>
+        <button onclick="moveByName('activeblock',0,1,0)">up</button>
+        <button onclick="moveByName('activeblock',0,-1,0)">down</button>
+    </div>
+    <div>
+        <button onclick="moveByName('activeblock',-1,0,0)">left</button>
+        <button onclick="moveByName('activeblock',1,0,0)">right</button>
+    </div>
+    <div>
+        <button onclick="moveByName('activeblock',0,0,1)">in</button>
+        <button onclick="moveByName('activeblock',0,0,-1)">out</button>
+    </div>
+</div>
+<div id="imgframe" style="position: relative; height: 320px; width: 700px; border: 1px solid black">
+</div>
+
+<script>
+    function index(x, y, z, X, Y, Z) {
+        var result = { x: 0, y: 0, z: 0 };
+        result.x = 40 * x + 20 * z;
+        result.y = 40 * y + 10 * (z);
+        var temp_xz = ((2 * x - X) * (2 * x - X) + (2 * z - Z) * (2 * z - Z)) / (X * X + Z * Z);//(2 * y - Y) * (2 * y - Y)+
+        var temp_y = 1- y / Y;
+        result.z = temp_xz * temp_y+0.1;
+        return result;
+    }
+    function loadCubes(w, h, d) {
+        for (var i = 0; i < w; i++) {
+            for (var j = 0; j < h; j++) {
+                for (var k = 0; k < d; k++) {
+                    var ind = index(i, j, k, w, h, d)
+                    addImg(ind,i,j,k);
+                }
+            }
+        }
+        addItem("activeblock", index(5, 2, 5, w, h, d), 5, 2, 5);
+        markCube(5, 2, 5, w, h, d);
+    }
+    function moveByName(name, x, y, z) {
+        var obj = $('#' + name);
+        var X = parseInt(obj.attr('coo_x'));
+        var Y = parseInt(obj.attr('coo_y'));
+        var Z = parseInt(obj.attr('coo_z'));
+
+        if ((X + x) >= 0 && (X + x) < 11 && (Y + y) >= 0 && (Y + y) < 5 && (Z + z) >= 0 && (Z + z) < 11) {
+            markCube(X, Y, Z, 11, 5, 11);
+            var ind = index(x + X, y + Y, z + Z, 11, 5, 11);
+            obj.css({ left: ind.x + 'px', bottom: ind.y + 'px' });
+            obj.attr({ coo_x: x + X, coo_y: y + Y, coo_z: z + Z });
+            markCube(X+x, Y+y, Z+z, 11, 5, 11);
+        }
+    }
+    function addImg(input,x,y,z) {
+        $("#imgframe").append('<img src="Views/Partial/cube_basic2.png" id="cube_'+x+'_'+y+'_'+z+'" style="position:absolute;width:60px;height:50px;left:' + input.x + 'px;bottom:' + input.y + 'px;opacity:' + input.z + '"/>');// input.z
+    }
+    function addItem(name,input,x,y,z) {
+        $("#imgframe").append('<img src="Views/Partial/cube_active2.png" id="'+name+'" coo_x="' + x + '" coo_y="' + y + '" coo_z="' + z + '" style="position:absolute;width:60px;height:50px;left:' + input.x + 'px;bottom:' + input.y + 'px;opacity:' + 1 + '"/>');// input.z
+    }
+    function markCube(x, y, z,X,Y,Z) {
+        var string1 = "Views/Partial/cube_basic2.png";
+        var string2 = "Views/Partial/cube_active.png";
+        for (var i = 0; i < X; i++) {
+            var idstr = '#cube_' + i + '_' + y + '_' + z;
+            var obj = $(idstr);
+            var opa = parseFloat(obj.css('opacity'));
+            var src = obj.attr('src')==string1?string2:string1;
+            obj.attr({src:src});
+            //obj.css({ opacity: 1 - opa });
+        }
+        for (var i = 0; i < Y; i++) {
+            var idstr = '#cube_' + x + '_' + i + '_' + z;
+            var obj = $(idstr);
+            var opa = parseFloat(obj.css('opacity'));
+            var src = obj.attr('src') == string1 ? string2 : string1;
+            obj.attr({ src: src });
+            //obj.css({ opacity: 1 - opa });
+        }
+        for (var i = 0; i < Z; i++) {
+            var idstr = '#cube_' + x + '_' + y + '_' + i;
+            var obj = $(idstr);
+            var opa = parseFloat(obj.css('opacity'));
+            var src = obj.attr('src') == string1 ? string2 : string1;
+            obj.attr({ src: src });
+            //obj.css({ opacity: 1 - opa });
+        }
+
+    }
+</script>
