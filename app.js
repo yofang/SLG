@@ -1,6 +1,6 @@
 ﻿tapp=angular.module("taskApp", ['ngRoute','ngTouch']);
  tapp.run(function ($http, $templateCache) {
-     $http.get("Views/Partial/cube.png", { cache: $templateCache });
+     //$http.get("Views/Partial/cube.png", { cache: $templateCache });
  });
 tapp.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider,$log) {
 

@@ -1,18 +1,28 @@
-﻿<button ng-click="loadCubes(11,5,11)">Load</button>
-<div>
+﻿    <keyinput></keyinput>       
+<div ng-init="loadCubes(11,5,11)">
     <div>
-        <button ng-click="moveByName('activeblock',0,1,0)">up</button>
-        <button ng-click="moveByName('activeblock',0,-1,0)">down</button>
+        <button ng-click="moveByName('activeblock',0,1,0,focus.id)">up</button>
+        <button ng-click="moveByName('activeblock',0,-1,0,focus.id)">down</button>
     </div>
     <div>
-        <button ng-click="moveByName('activeblock',-1,0,0)">left</button>
-        <button ng-click="moveByName('activeblock',1,0,0)">right</button>
+        <button ng-click="moveByName('activeblock',-1,0,0,focus.id)">left</button>
+        <button ng-click="moveByName('activeblock',1,0,0,focus.id)">right</button>
     </div>
     <div>
-        <button ng-click="moveByName('activeblock',0,0,1)">in</button>
-        <button ng-click="moveByName('activeblock',0,0,-1)">out</button>
+        <button ng-click="moveByName('activeblock',0,0,1,focus.id)">in</button>
+        <button ng-click="moveByName('activeblock',0,0,-1,focus.id)">out</button>
     </div>
 </div>
 <div id="imgframe" style="position: relative; height: 320px; width: 700px; border: 1px solid black">
 </div>
-
+<div ng-repeat="c in characters">
+    <div ng-click="focus_on(c)">        
+        <strong class="{{c.selected}}">{{c.name}}</strong><span>:({{c.position_cur.x}},{{c.position_cur.y}},{{c.position_cur.z}})</span>
+        <br />
+        <strong>HP:</strong><span>{{c.Status.hp_cur}}</span><span>/{{c.Status.hp}}</span>
+        <br />
+        <strong>MP:</strong><span>{{c.Status.mp_cur}}</span><span>/{{c.Status.mp}}</span>
+        <br />
+        <strong>Move:</strong><span>{{c.Status.move_cur}}</span><span>/{{c.Status.move}}</span>
+    </div>
+</div>

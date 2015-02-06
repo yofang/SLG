@@ -1,2 +1,14 @@
 body {
 }
+
+.selected {
+    color:lightgray;
+}
+
+.not_selected {
+    color:lightblue;
+}
+
+.person {
+    border:1px solid black;
+}

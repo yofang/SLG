@@ -19,3 +19,19 @@
       };
       
   });
+
+tapp.
+  directive('keyinput', function ($document) {//yoyo:creating a ng directive which config the dragged external items of fullcalendar
+          return {
+              restrict: 'E',
+              replace: true,
+              scope: true,
+              link: function (scope, element, attr) {
+                  jQuery(document).on('keypress', function(e){
+                      scope.$apply(scope.keyMove(e));
+                      //scope.$apply(scope.keyMove(e));
+                  });
+              }
+          };
+
+  });
