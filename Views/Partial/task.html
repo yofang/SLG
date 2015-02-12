@@ -25,4 +25,9 @@
         <br />
         <strong>Move:</strong><span>{{c.Status.move_cur}}</span><span>/{{c.Status.move}}</span>
     </div>
+    <div ng-show="focus.id==c.id" ng-repeat="s in c.Skills">
+        <div>
+            {{s.name}}
+        </div>
+    </div>
 </div>
